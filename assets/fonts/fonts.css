@@ -3,7 +3,7 @@
   font-family: 'Orbitron';
   font-style: normal;
   font-weight: 100 900; /* intervalo do peso da fonte */
-  src: url('assets/fonts/orbitron/Orbitron.ttf') format('truetype');
+  src: url('./assets/fonts/orbitron/Orbitron.ttf') format('truetype');
 }
 
 /* Exo 2 - Variable Font */
@@ -11,12 +11,12 @@
   font-family: 'Exo 2';
   font-style: normal;
   font-weight: 100 900;
-  src: url('assets/fonts/exo2/Exo2.ttf') format('truetype');
+  src: url('./assets/fonts/exo2/Exo2.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Exo 2';
   font-style: italic;
   font-weight: 100 900;
-  src: url('assets/fonts/exo2/Exo2-Italic.ttf') format('truetype');
+  src: url('./assets/fonts/exo2/Exo2-Italic.ttf') format('truetype');
 }
