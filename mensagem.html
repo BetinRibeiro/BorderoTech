@@ -7,9 +7,9 @@
 
     <title>BorderôTech - Calculadora Financeira</title>
 <!-- Tailwind CSS -->
-<link rel="stylesheet" href="assets/tailwind.min.css" />
+<link rel="stylesheet" href="./assets/tailwind.min.css" />
 <!-- Font Awesome (local) -->
-<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<link rel="stylesheet" href="./assets/fonts/fonts.css" />
 
 <!-- Google Fonts (local) -->
 <style>
@@ -39,9 +39,9 @@ body {
     />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <link rel="icon" type="image/png" href="./assets/favicon.png" />
+    <link rel="apple-touch-icon" href="./assets/favicon.png" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="BorderôTech – Controle de Borderôs com Eficiência" />
@@ -63,7 +63,7 @@ body {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
         const url = window.location.href;
-        const baseImage = url.endsWith("/") ? url + "assets/preview.png" : url + "/assets/preview.png";
+        const baseImage = url.endsWith("/") ? url + "./assets/preview.png" : url + "/assets/preview.png";
 
         // og:url
         const ogUrl = document.createElement("meta");
