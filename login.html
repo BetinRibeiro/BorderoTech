@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BorderôTech - Calculadora Financeira</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="BorderôTech – Controle de Borderôs com Eficiência" />
+    <meta
+        property="og:description"
+        content="Plataforma intuitiva para controle, gestão e automação de borderôs de forma prática e segura."
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BorderôTech – Controle de Borderôs com Eficiência" />
+    <meta
+        name="twitter:description"
+        content="Plataforma intuitiva para controle, gestão e automação de borderôs de forma prática e segura."
+    />
+
+    <!-- Script para links dinâmicos -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const url = window.location.href;
+        const baseImage = url.endsWith("/") ? url + "assets/preview.png" : url + "/assets/preview.png";
+
+        // og:url
+        const ogUrl = document.createElement("meta");
+        ogUrl.setAttribute("property", "og:url");
+        ogUrl.setAttribute("content", url);
+        document.head.appendChild(ogUrl);
+
+        // og:image
+        const ogImg = document.createElement("meta");
+        ogImg.setAttribute("property", "og:image");
+        ogImg.setAttribute("content", baseImage);
+        document.head.appendChild(ogImg);
+
+        // twitter:image
+        const twImg = document.createElement("meta");
+        twImg.setAttribute("name", "twitter:image");
+        twImg.setAttribute("content", baseImage);
+        document.head.appendChild(twImg);
+        });
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00ff9d',
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#242424'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        exo: ['Exo 2', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(0, 255, 157, 0.5)',
+                        'glow-sm': '0 0 8px rgba(0, 255, 157, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #090909 0%, #000 100%);
+            font-family: 'Exo 2', sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .tech-border {
+            position: relative;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .tech-border::before, .tech-border::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff9d;
+            z-index: 10;
+        }
+        
+        .tech-border::before {
+            top: -1px;
+            left: -1px;
+        }
+        
+        .tech-border::after {
+            top: -1px;
+            right: -1px;
+        }
+        
+        .tech-border-bottom::before, .tech-border-bottom::after {
+            top: auto;
+            bottom: -1px;
+        }
+        
+        .tech-border-bottom::before {
+            left: -1px;
+        }
+        
+        .tech-border-bottom::after {
+            right: -1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #00a76a, #00d187);
+            border: none;
+            color: black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        .hexagon-bg {
+            background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .input-tech {
+            background: rgba(25, 25, 25, 0.7);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        
+        .input-tech:focus {
+            border-color: #00ff9d;
+            box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.2);
+            outline: none;
+        }
+        
+        .tech-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 157, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
+        }
+        
+        .terminal-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #00ff9d;
+            text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
+        }
+        
+        .tech-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(40, 40, 40, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(40, 40, 40, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(0, 255, 157, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -2;
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    <div class="tech-grid"></div>
+    <div id="particles-container" class="fixed inset-0"></div>
+    
+        <!-- <div class="container px-4 py-8 max-w-md relative z-10"> -->
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl relative z-10">
+        <header class="mb-12 tech-glow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold font-orbitron">
+                        <span class="text-primary">BORDERÔ</span><span class="text-white">TECH</span>
+                    </h1>
+                    <p class="text-gray-400 text-sm mt-1 font-exo">Calculadora de Projeção Financeira</p>
+                </div>
+                <div class="flex space-x-2">
+                    <!-- <button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600">
+                        <i class="fas fa-cog text-primary"></i>
+                    </button>
+                    <button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600">
+                        <i class="fas fa-history text-primary"></i>
+                    </button> -->
+                </div>
+            </div>
+            
+            <div class="mt-6 flex flex-wrap gap-2 font-exo">
+                <div class="bg-dark-800 px-3 py-1.5 rounded-full text-xs flex items-center">
+                    <i class="fas fa-microchip text-primary mr-2"></i>
+                    <span>Algoritmo Avançado</span>
+                </div>
+                <div class="bg-dark-800 px-3 py-1.5 rounded-full text-xs flex items-center">
+                    <i class="fas fa-bolt text-primary mr-2"></i>
+                    <span>Cálculo em Tempo Real</span>
+                </div>
+                <div class="bg-dark-800 px-3 py-1.5 rounded-full text-xs flex items-center">
+                    <!-- <i class="fas fa-shield-alt text-primary mr-2"></i>
+                    <span>Dados Locais</span> -->
+                </div>
+            </div>
+        </header>
+        
+        <div class="hexagon-bg p-8 tech-border max-w-md mx-auto">
+            <h2 class="font-orbitron text-xl border-b border-dark-600 pb-3 mb-6 flex items-center justify-center">
+                <i class="fas fa-lock text-primary mr-3"></i>
+                Área Restrita
+            </h2>
+            
+            <form class="space-y-5">
+                <!-- <div>
+                    <label class="block text-sm font-medium mb-2">Usuário</label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            class="w-full input-tech p-3"
+                            placeholder="Informe seu usuário"
+                            required
+                        >
+                        <span class="absolute right-3 top-3 text-gray-400">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div> -->
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Senha</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="senha"
+                            class="w-full input-tech p-3 pr-10"
+                            placeholder="Informe sua senha"
+                            required
+                        >
+                        <span class="absolute right-3 top-3 cursor-pointer text-gray-400 hover:text-primary" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye-slash" id="passwordEyeIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="pt-2">
+                    <button 
+                        type="submit" 
+                        onclick="logar()"
+                        class="btn-primary w-full px-6 py-3 rounded-lg font-bold flex items-center justify-center"
+                    >
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Entrar
+                    </button>
+                </div>
+                
+                <div class="text-center text-sm text-gray-500 mt-4">
+                    <a href="#" class="text-primary hover:underline">Esqueci minha senha</a>
+                </div>
+            </form>
+        </div>
+        
+        <footer class="mt-16 py-8 text-center border-t border-dark-700">
+            <div class="text-sm text-gray-500 flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
+                <div>
+                    <span class="terminal-text">BORDERÔTECH v2.0</span>
+                </div>
+                <div>
+                    <i class="fas fa-lock text-primary mr-1"></i>
+                    <span>Algoritmo Seguro</span>
+                </div>
+                <div>
+                    <i class="fas fa-bolt text-primary mr-1"></i>
+                    <span>Processamento Instantâneo</span>
+                </div>
+                <div>
+                    <i class="fas fa-shield-alt text-primary mr-1"></i>
+                    <span>2025</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Configuração do formulário de login
+        document.addEventListener("DOMContentLoaded", function() {
+            // Criar partículas
+            createParticles();
+            
+            // Adicionar evento ao formulário de login
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Valores fictícios para exemplo
+                const usuario = this.querySelector('input[type="text"]').value;
+                const senha = this.querySelector('input[type="password"]').value;
+                
+                if (usuario === "admin" && senha === "1234") {
+                    showAlert("Login realizado com sucesso! Redirecionando...", "success");
+                    // Redirecionar após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 2000);
+                } else {
+                    showAlert("Usuário ou senha incorretos", "error");
+                }
+            });
+        });
+        
+        // Função para criar partículas flutuantes
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particlesCount = window.innerWidth > 768 ? 20 : 10;
+            
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamanho entre 10px e 80px
+                const size = Math.random() * 70 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posições aleatórias
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                
+                // Animação de movimento
+                particle.style.animation = `moveParticle ${Math.random() * 30 + 10}s linear infinite`;
+                
+                // Aplicar delay inicial para variar
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+            
+            // Adicionar estilo para animação de movimento
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes moveParticle {
+                    0% {
+                        transform: translate(0, 0) rotate(0deg);
+                        opacity: 0.1;
+                    }
+                    25% {
+                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) rotate(90deg);
+                        opacity: ${Math.random() * 0.2 + 0.1};
+                    }
+                    50% {
+                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) rotate(180deg);
+                        opacity: 0.2;
+                    }
+                    75% {
+                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) rotate(270deg);
+                        opacity: ${Math.random() * 0.2 + 0.1};
+                    }
+                    100% {
+                        transform: translate(0, 0) rotate(360deg);
+                        opacity: 0.1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Função principal para calcular o borderô
+        function calcularBordero() {
+            // Obtém os valores do formulário
+            const valorBrutoInput = document.getElementById("valorBruto").value;
+            const valorLiquidoInput = document.getElementById("valorLiquido").value;
+            const numeroParcelas = parseInt(document.getElementById("numeroParcelas").value);
+            const taxaDesconto = parseFloat(document.getElementById("taxaDesconto").value);
+            
+            // Configura datas
+            const dataInput = document.getElementById("dataPrimeiroVencimento").value;
+            const partes = dataInput.split("-");
+            const dataPrimeiroVencimento = new Date(
+                parseInt(partes[0]),
+                parseInt(partes[1]) - 1,
+                parseInt(partes[2])
+            );
+            const intervaloParcelas = parseInt(document.getElementById("intervaloParcelas").value);
+            
+            // Validações básicas
+            if ((!valorBrutoInput || valorBrutoInput <= 0) && (!valorLiquidoInput || valorLiquidoInput <= 0)) {
+                showAlert("Por favor, informe um valor válido (bruto ou líquido) maior que zero.", "error");
+                return;
+            } else if (valorBrutoInput && valorBrutoInput > 0 && valorLiquidoInput && valorLiquidoInput > 0) {
+                showAlert("Por favor, informe apenas um valor (bruto OU líquido), não ambos.", "warning");
+                return;
+            }
+            
+            if (isNaN(numeroParcelas) || numeroParcelas <= 0) {
+                showAlert("Por favor, informe um número válido de parcelas.", "error");
+                return;
+            }
+            
+            if (isNaN(dataPrimeiroVencimento.getTime())) {
+                showAlert("Por favor, selecione uma data de vencimento válida.", "error");
+                return;
+            }
+            
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            
+            // Variáveis de cálculo
+            let valorBrutoTotal;
+            let valorParcelaBruta;
+            let valorTotalLiquido;
+            let valorBrutoCalculado;
+            
+            // Calcula com base no valor líquido informado
+            if (valorLiquidoInput && valorLiquidoInput > 0) {
+                const valorLiquidoTotal = parseFloat(valorLiquidoInput);
+                
+                // Função que calcula o valor líquido para um determinado valor bruto
+                function calcularLiquido(valorBruto) {
+                    let totalLiquido = 0;
+                    const vlrParcela = valorBruto / numeroParcelas;
+                    
+                    for (let i = 1; i <= numeroParcelas; i++) {
+                        const dataVencimento = new Date(dataPrimeiroVencimento);
+                        if (i > 1) {
+                            dataVencimento.setDate(dataVencimento.getDate() + (i - 1) * intervaloParcelas);
+                        }
+                        
+                        const diffDays = Math.floor((dataVencimento - hoje) / (1000 * 60 * 60 * 24)) + 1;
+                        let juros = 0;
+                        
+                        if (diffDays > 0) {
+                            const taxaDiaria = taxaDesconto / 100 / 30;
+                            juros = taxaDiaria * diffDays * vlrParcela;
+                        }
+                        
+                        totalLiquido += vlrParcela - juros;
+                    }
+                    
+                    return totalLiquido;
+                }
+                
+                // Método da bisseção para encontrar o valor bruto correto
+                let low = 0;
+                let high = valorLiquidoTotal * 2; // Limite superior inicial arbitrário
+                let mid;
+                let iterations = 0;
+                const maxIterations = 100;
+                const tolerance = 0.01; // Precisão de 1 centavo
+                
+                while (high - low > tolerance && iterations < maxIterations) {
+                    mid = (high + low) / 2;
+                    const liquidoCalculado = calcularLiquido(mid);
+                    
+                    if (liquidoCalculado < valorLiquidoTotal) {
+                        low = mid;
+                    } else {
+                        high = mid;
+                    }
+                    
+                    iterations++;
+                }
+                
+                valorBrutoCalculado = (high + low) / 2;
+                valorBrutoTotal = valorBrutoCalculado;
+                valorParcelaBruta = valorBrutoTotal / numeroParcelas;
+                valorTotalLiquido = valorLiquidoTotal;
+            }
+            
+            // Calcula com base no valor bruto informado
+            else {
+                valorBrutoTotal = parseFloat(valorBrutoInput);
+                valorParcelaBruta = valorBrutoTotal / numeroParcelas;
+                valorTotalLiquido = 0; // Será calculado no loop abaixo
+            }
+            
+            // Inicializa os totais
+            let totalBruto = valorBrutoTotal;
+            let totalDescontos = 0;
+            let totalLiquido = 0;
+            
+            // Limpa os resultados anteriores da tabela
+            const tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = "";
+            
+            // Processa cada parcela
+            for (let i = 1; i <= numeroParcelas; i++) {
+                // Calcula a data de vencimento da parcela atual
+                const dataVencimento = new Date(dataPrimeiroVencimento);
+                if (i > 1) {
+                    dataVencimento.setDate(
+                        dataVencimento.getDate() + (i - 1) * intervaloParcelas
+                    );
+                }
+                
+                // Calcula a diferença em dias entre hoje e a data de vencimento (soma 1 para incluir o dia atual)
+                const diffTime = dataVencimento - hoje;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                
+                // Calcula o valor do juro (desconto) apenas se a data de vencimento for futura
+                let juros = 0;
+                if (diffDays > 0) {
+                    // Taxa de desconto diária = taxa mensal / 30 dias
+                    const taxaDiaria = taxaDesconto / 100 / 30;
+                    juros = taxaDiaria * diffDays * valorParcelaBruta;
+                }
+                
+                // Calcula o valor líquido da parcela após o desconto
+                const valorLiquidoParcela = valorParcelaBruta - juros;
+                
+                // Atualiza os totais
+                totalDescontos += juros;
+                totalLiquido += valorLiquidoParcela;
+                
+                // Cria e adiciona uma nova linha à tabela com os dados da parcela
+                const row = document.createElement("tr");
+                row.className = i % 2 === 0 ? "bg-dark-700" : "bg-dark-800";
+                row.innerHTML = `
+                    <td class="px-4 py-3">${i}</td>
+                    <td class="px-4 py-3">${formatDate(dataVencimento)}</td>
+                    <td class="px-4 py-3 text-right">${diffDays}</td>
+                    <td class="px-4 py-3 text-right">${formatCurrency(valorParcelaBruta)}</td>
+                    <td class="px-4 py-3 text-right text-red-400">${formatCurrency(juros)}</td>
+                    <td class="px-4 py-3 text-right text-green-400 font-medium">${formatCurrency(valorLiquidoParcela)}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+            
+            // Atualiza os campos de total na interface
+            document.getElementById("totalBruto").textContent = formatCurrency(totalBruto);
+            document.getElementById("totalDescontos").textContent = formatCurrency(totalDescontos);
+            document.getElementById("totalLiquido").textContent = formatCurrency(totalLiquido);
+            
+            // Calcula e mostra os percentuais
+            const percDescontos = (totalDescontos / totalBruto * 100).toFixed(2) + '%';
+            const percLiquido = (totalLiquido / totalBruto * 100).toFixed(2) + '%';
+            
+            document.getElementById("percDescontos").textContent = percDescontos;
+            document.getElementById("percLiquido").textContent = percLiquido;
+            
+            // Atualiza o campo de valor líquido no formulário
+            document.getElementById("valorLiquido").value = totalLiquido.toFixed(2);
+            
+            // Mostra o container de resultados, se estiver oculto
+            document.getElementById("resultContainer").style.display = 'block';
+            
+            // Rola suavemente até a área dos resultados
+            document.getElementById("resultContainer").scrollIntoView({ behavior: "smooth" });
+            
+            // Atualiza a visualização gráfica
+            const maxHeight = 32; // 100% da altura dos gráficos
+            
+            // Converte valores para porcentagem do maior valor
+            const maxValue = Math.max(totalBruto, totalLiquido + totalDescontos);
+            
+            // Calcula alturas proporcionais
+            const alturaBruto = (totalBruto / maxValue) * 100;
+            const alturaDescontos = (totalDescontos / maxValue) * 100;
+            const alturaLiquido = (totalLiquido / maxValue) * 100;
+            
+            // Aplica as alturas aos elementos
+            document.getElementById('barBruto').style.height = `${alturaBruto}%`;
+            document.getElementById('barDescontos').style.height = `${alturaDescontos}%`;
+            document.getElementById('barLiquido').style.height = `${alturaLiquido}%`;
+            
+            // Feedback visual
+            showAlert("Cálculo realizado com sucesso!", "success");
+        }
+        
+        // Função para limpar o formulário e redefinir os valores
+        function limparFormulario() {
+            // Reseta todos os campos do formulário com id "calculationForm"
+            document.getElementById("calculationForm").reset();
+            
+            // Limpa o campo de valor líquido manualmente
+            document.getElementById("valorLiquido").value = "";
+            
+            // Redefine a data de vencimento para a data atual + 30 dias
+            const today = new Date();
+            const futureDate = new Date(today.setDate(today.getDate() + 30))
+                .toISOString() // Converte para string no formato ISO
+                .split("T")[0]; // Extrai apenas a data (sem horário)
+            document.getElementById("dataPrimeiroVencimento").value = futureDate;
+            
+            // Esconde o container de resultados novamente
+            document.getElementById("resultContainer").style.display = "none";
+            
+            // Reseta a visualização gráfica
+            document.getElementById('barBruto').style.height = '0';
+            document.getElementById('barDescontos').style.height = '0';
+            document.getElementById('barLiquido').style.height = '0';
+            
+            showAlert("Formulário limpo com sucesso!", "info");
+        }
+        
+        // Função para formatar uma data no padrão brasileiro (dd/mm/aaaa)
+        function formatDate(date) {
+            return date.toLocaleDateString("pt-BR");
+        }
+        
+        // Função para formatar um número como moeda brasileira (ex: R$ 1.234,56)
+        function formatCurrency(value) {
+            return "R$ " + value.toFixed(2).replace(".", ",");
+        }
+        
+        // Função que imprime a página atual (abre a janela de impressão)
+        function printPage() {
+            window.print();
+        }
+        
+        // Função para mostrar alertas estilizados
+        function showAlert(message, type = "info") {
+            // Remove qualquer alerta existente
+            const existingAlert = document.querySelector('.custom-alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            const colors = {
+                error: 'bg-red-900/80 border-red-600',
+                warning: 'bg-yellow-900/80 border-yellow-600',
+                success: 'bg-green-900/80 border-green-600',
+                info: 'bg-blue-900/80 border-blue-600'
+            };
+            
+            const icons = {
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                success: 'fas fa-check-circle',
+                info: 'fas fa-info-circle'
+            };
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-alert fixed top-4 right-4 z-50 p-4 rounded-lg border border-opacity-50 backdrop-blur-md ${colors[type]} text-white transition-all duration-300 flex items-start max-w-md animate-slide-in`;
+            alertDiv.innerHTML = `
+                <i class="${icons[type]} text-xl mr-3 mt-0.5"></i>
+                <div class="flex-1">
+                    <p class="font-semibold">${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+                    <p class="text-sm mt-1">${message}</p>
+                </div>
+                <button class="ml-3 text-gray-300 hover:text-white" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Remove automaticamente após 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.classList.add('animate-slide-out');
+                    setTimeout(() => {
+                        if (alertDiv.parentNode) alertDiv.remove();
+                    }, 300);
+                }
+            }, 5000);
+        }
+        
+        // Adicionar animação de entrada para alerta
+        const alertStyle = document.createElement('style');
+        alertStyle.textContent = `
+            @keyframes slide-in {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slide-out {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            .animate-slide-in {
+                animation: slide-in 0.3s forwards;
+            }
+            
+            .animate-slide-out {
+                animation: slide-out 0.3s forwards;
+            }
+        `;
+        document.head.appendChild(alertStyle);
+    </script>
+
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('senha');
+      const eyeIcon = document.getElementById('passwordEyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      }
+    }
+  async function logar() {
+    const senhaDigitada = document.getElementById('senha').value;
+
+    try {
+      const response = await fetch('assets/arquivo.json');
+      const dados = await response.json();
+
+      const senhaCorreta = dados.senha;
+    console.log(senhaCorreta);    
+      if (senhaDigitada === senhaCorreta) {
+        localStorage.setItem('senha', senhaDigitada);
+        window.location.href = 'index.html';
+      } else {
+        showAlert("Inserir uma Senha Válida!", "error");
+      }
+    } catch (erro) {
+      console.error('Erro ao carregar o arquivo JSON:', erro);
+      showAlert("Erro ao verificar licença!", "error");
+    }
+  }
+
+
+  </script>
+</body>
+</html>
