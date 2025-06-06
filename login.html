@@ -67,156 +67,158 @@
         });
     </script>
 
-        <script>
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        colors: {
-                            primary: '#00ff9d',
-                            dark: {
-                                900: '#0a0a0a',
-                                800: '#121212',
-                                700: '#1a1a1a',
-                                600: '#242424'
-                            }
-                        },
-                        fontFamily: {
-                            orbitron: ['Orbitron', 'sans-serif'],
-                            exo: ['Exo 2', 'sans-serif']
-                        },
-                        boxShadow: {
-                            'glow': '0 0 15px rgba(0, 255, 157, 0.5)',
-                            'glow-sm': '0 0 8px rgba(0, 255, 157, 0.3)'
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00ff9d',
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#242424'
                         }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        exo: ['Exo 2', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(0, 255, 157, 0.5)',
+                        'glow-sm': '0 0 8px rgba(0, 255, 157, 0.3)'
                     }
                 }
             }
-        </script>
-        <style>
-            body {
-                background: radial-gradient(circle at center, #090909 0%, #000 100%);
-                font-family: 'Exo 2', sans-serif;
-                color: #e0e0e0;
-                min-height: 100vh;
-                overflow-x: hidden;
-            }
-            
-            .tech-border {
-                position: relative;
-                border: 1px solid #2a2a2a;
-            }
-            
-            .tech-border::before, .tech-border::after {
-                content: '';
-                position: absolute;
-                width: 10px;
-                height: 10px;
-                background-color: #00ff9d;
-                z-index: 10;
-            }
-            
-            .tech-border::before {
-                top: -1px;
-                left: -1px;
-            }
-            
-            .tech-border::after {
-                top: -1px;
-                right: -1px;
-            }
-            
-            .tech-border-bottom::before, .tech-border-bottom::after {
-                top: auto;
-                bottom: -1px;
-            }
-            
-            .tech-border-bottom::before {
-                left: -1px;
-            }
-            
-            .tech-border-bottom::after {
-                right: -1px;
-            }
-            
-            .btn-primary {
-                background: linear-gradient(to right, #00a76a, #00d187);
-                border: none;
-                color: black;
-                font-weight: 600;
-                transition: all 0.3s ease;
-            }
-            
-            .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 15px rgba(0, 255, 157, 0.3);
-            }
-            
-            .hexagon-bg {
-                background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
-                border: 1px solid #2a2a2a;
-                border-radius: 12px;
-                overflow: hidden;
-            }
-            
-            .input-tech {
-                background: rgba(25, 25, 25, 0.7);
-                border: 1px solid #333;
-                border-radius: 8px;
-                color: #f0f0f0;
-                transition: all 0.3s ease;
-            }
-            
-            .input-tech:focus {
-                border-color: #00ff9d;
-                box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.2);
-                outline: none;
-            }
-            
-            .tech-glow {
-                animation: pulse-glow 2s infinite;
-            }
-            
-            @keyframes pulse-glow {
-                0% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
-                50% { box-shadow: 0 0 20px rgba(0, 255, 157, 0.5); }
-                100% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
-            }
-            
-            .terminal-text {
-                font-family: 'Courier New', monospace;
-                font-size: 1.1rem;
-                color: #00ff9d;
-                text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
-            }
-            
-            .tech-grid {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: 
-                    linear-gradient(rgba(40, 40, 40, 0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(40, 40, 40, 0.1) 1px, transparent 1px);
-                background-size: 20px 20px;
-                z-index: -1;
-                pointer-events: none;
-            }
-            
-            .particle {
-                position: absolute;
-                background-color: rgba(0, 255, 157, 0.1);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: -2;
-            }
-        </style>
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #090909 0%, #000 100%);
+            font-family: 'Exo 2', sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .tech-border {
+            position: relative;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .tech-border::before, .tech-border::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff9d;
+            z-index: 10;
+        }
+        
+        .tech-border::before {
+            top: -1px;
+            left: -1px;
+        }
+        
+        .tech-border::after {
+            top: -1px;
+            right: -1px;
+        }
+        
+        .tech-border-bottom::before, .tech-border-bottom::after {
+            top: auto;
+            bottom: -1px;
+        }
+        
+        .tech-border-bottom::before {
+            left: -1px;
+        }
+        
+        .tech-border-bottom::after {
+            right: -1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #00a76a, #00d187);
+            border: none;
+            color: black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        .hexagon-bg {
+            background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .input-tech {
+            background: rgba(25, 25, 25, 0.7);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        
+        .input-tech:focus {
+            border-color: #00ff9d;
+            box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.2);
+            outline: none;
+        }
+        
+        .tech-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 157, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 157, 0.3); }
+        }
+        
+        .terminal-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #00ff9d;
+            text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
+        }
+        
+        .tech-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(40, 40, 40, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(40, 40, 40, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(0, 255, 157, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -2;
+        }
+    </style>
 </head>
 <body class="relative overflow-x-hidden">
     <div class="tech-grid"></div>
     <div id="particles-container" class="fixed inset-0"></div>
     
+        <!-- <div class="container px-4 py-8 max-w-md relative z-10"> -->
+
     <div class="container mx-auto px-4 py-8 max-w-6xl relative z-10">
         <header class="mb-12 tech-glow">
             <div class="flex items-center justify-between">
@@ -224,12 +226,9 @@
                     <h1 class="text-3xl md:text-4xl font-bold font-orbitron">
                         <span class="text-primary">BORDERÔ</span><span class="text-white">TECH</span>
                     </h1>
-                    <div id="contador" style="margin-top: 20px; font-weight: bold; color: rgb(130, 166, 206);"></div>
-
-                    <!-- <p class="text-gray-400 text-sm mt-1 font-exo">Calculadora de Projeção Financeira</p> -->
+                    <p class="text-gray-400 text-sm mt-1 font-exo">Calculadora de Projeção Financeira</p>
                 </div>
                 <div class="flex space-x-2">
-                    
                     <!-- <button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600">
                         <i class="fas fa-cog text-primary"></i>
                     </button>
@@ -255,219 +254,60 @@
             </div>
         </header>
         
-        <main>
-            <div class="flex flex-col lg:flex-row gap-8">
-                <!-- Formulário -->
-                <div class="lg:w-1/2">
-                    <div class="hexagon-bg p-6 tech-border">
-                        <h2 class="font-orbitron text-xl border-b border-dark-600 pb-3 mb-5 flex items-center">
-                            <i class="fas fa-calculator text-primary mr-3"></i>
-                            Parâmetros de Cálculo
-                        </h2>
-                        
-                        <form id="calculationForm" class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Valor Financeiro*</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <div class="relative">
-                                            <input 
-                                                type="number" 
-                                                id="valorBruto" 
-                                                class="w-full input-tech p-3 pr-10"
-                                                placeholder="Valor bruto total"
-                                                min="0"
-                                                step="0.01"
-                                            >
-                                            <span class="absolute right-3 top-3 text-gray-400">R$</span>
-                                        </div>
-                                        <p class="text-xs text-gray-500 mt-1">Valor total a ser financiado</p>
-                                    </div>
-                                    <div>
-                                        <div class="relative">
-                                            <input 
-                                                type="number" 
-                                                id="valorLiquido" 
-                                                class="w-full input-tech p-3 pr-10"
-                                                placeholder="Valor líquido esperado"
-                                                min="0"
-                                                step="0.01"
-                                            >
-                                            <span class="absolute right-3 top-3 text-gray-400">R$</span>
-                                        </div>
-                                        <p class="text-xs text-gray-500 mt-1">Valor líquido após descontos</p>
-                                    </div>
-                                </div>
-                                <p class="text-xs mt-2 text-primary">
-                                    <i class="fas fa-info-circle mr-1"></i>Preencha apenas um dos valores
-                                </p>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="numeroParcelas" class="block text-sm font-medium mb-2">Nº de Parcelas*</label>
-                                    <input 
-                                        type="number" 
-                                        id="numeroParcelas" 
-                                        class="w-full input-tech p-3"
-                                        placeholder="Quantidade de parcelas"
-                                        min="1"
-                                        step="1"
-                                        value=""
-                                        required
-                                    >
-                                </div>
-                                <div>
-                                    <label for="intervaloParcelas" class="block text-sm font-medium mb-2">Intervalo (dias)*</label>
-                                    <input 
-                                        type="number" 
-                                        id="intervaloParcelas" 
-                                        class="w-full input-tech p-3"
-                                        placeholder="Dias entre parcelas"
-                                        min="1"
-                                        step="1"
-                                        value=""
-                                        required
-                                    >
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="taxaDesconto" class="block text-sm font-medium mb-2">Taxa de Desconto (%)*</label>
-                                    <div class="relative">
-                                        <input 
-                                            type="number" 
-                                            id="taxaDesconto" 
-                                            class="w-full input-tech p-3 pr-10"
-                                            placeholder="Taxa mensal"
-                                            min="0"
-                                            step="0.01"
-                                            value=""
-                                            required
-                                        >
-                                        <span class="absolute right-3 top-3 text-gray-400">%</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="dataPrimeiroVencimento" class="block text-sm font-medium mb-2">Primeiro Vencimento*</label>
-                                    <input 
-                                        type="date" 
-                                        id="dataPrimeiroVencimento" 
-                                        class="w-full input-tech p-3"
-                                        required
-                                    >
-                                </div>
-                            </div>
-                            
-                            <div class="flex flex-wrap gap-3 pt-4">
-                                <button 
-                                    type="button" 
-                                    id="calcularBtn" 
-                                    class="btn-primary px-6 py-3 rounded-lg font-bold flex items-center"
-                                    onclick="calcularBordero()"
-                                >
-                                    <i class="fas fa-bolt mr-2"></i>
-                                    Calcular Projeção
-                                </button>
-                                <button 
-                                    type="button" 
-                                    onclick="limparFormulario()"
-                                    class="px-6 py-3 rounded-lg font-bold border border-dark-500 hover:bg-dark-700 flex items-center"
-                                >
-                                    <i class="fas fa-eraser mr-2"></i>
-                                    Limpar
-                                </button>
-                            </div>
-                        </form>
+        <div class="hexagon-bg p-8 tech-border max-w-md mx-auto">
+            <h2 class="font-orbitron text-xl border-b border-dark-600 pb-3 mb-6 flex items-center justify-center">
+                <i class="fas fa-lock text-primary mr-3"></i>
+                Área Restrita
+            </h2>
+            
+            <form class="space-y-5">
+                <!-- <div>
+                    <label class="block text-sm font-medium mb-2">Usuário</label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            class="w-full input-tech p-3"
+                            placeholder="Informe seu usuário"
+                            required
+                        >
+                        <span class="absolute right-3 top-3 text-gray-400">
+                            <i class="fas fa-user"></i>
+                        </span>
                     </div>
-                    
-                    <div class="hexagon-bg p-6 mt-6">
-                        <h2 class="font-orbitron text-xl border-b border-dark-600 pb-3 mb-5 flex items-center">
-                            <i class="fas fa-info-circle text-primary mr-3"></i>
-                            Informações do Sistema
-                        </h2>
-                        
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-microchip text-primary mt-1 mr-3"></i>
-                                <div>
-                                    <p class="font-semibold">Algoritmo de Cálculo</p>
-                                    <p class="text-sm text-gray-400 mt-1">
-                                        Sistema utiliza método de bisseção para cálculo preciso de valores líquidos, garantindo resultados com tolerância de R$0.01.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="flex items-start mt-4">
-                                <i class="fas fa-calendar-alt text-primary mt-1 mr-3"></i>
-                                <div>
-                                    <p class="font-semibold">Datas Automáticas</p>
-                                    <p class="text-sm text-gray-400 mt-1">
-                                        Primeiro vencimento pré-definido com D+30 a partir da data atual. Intervalos entre parcelas configuráveis.
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
+                </div> -->
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Senha</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="senha"
+                            class="w-full input-tech p-3 pr-10"
+                            placeholder="Informe sua senha"
+                            required
+                        >
+                        <span class="absolute right-3 top-3 cursor-pointer text-gray-400 hover:text-primary" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye-slash" id="passwordEyeIcon"></i>
+                        </span>
                     </div>
                 </div>
                 
-                <!-- Resultados -->
-                <div class="lg:w-1/2" id="resultContainer" style="display: none;">
-                    <div class="hexagon-bg p-6 mb-6">
-                        <div class="flex justify-between items-start flex-wrap gap-3">
-                            <h2 class="font-orbitron text-xl flex items-center">
-                                <i class="fas fa-chart-line text-primary mr-3"></i>
-                                Resultado da Projeção
-                            </h2>
-                            <button 
-                                onclick="printPage()"
-                                class="px-4 py-2 rounded-lg bg-dark-700 hover:bg-dark-600 flex items-center text-sm"
-                            >
-                                <i class="fas fa-print mr-2"></i>
-                                Imprimir
-                            </button>
-                        </div>
-                        
-                        <div class="mt-6 grid grid-cols-3 gap-4 text-center">
-                            <div class="p-4 bg-dark-800 rounded-lg">
-                                <p class="text-gray-400 text-sm">Total Bruto</p>
-                                <p id="totalBruto" class="font-bold text-xl mt-1 text-primary">R$ 0,00</p>
-                            </div>
-                            <div class="p-4 bg-dark-800 rounded-lg">
-                                <p class="text-gray-400 text-sm">Total Descontos</p>
-                                <p id="totalDescontos" class="font-bold text-xl mt-1 text-red-400">R$ 0,00</p>
-                                <p id="percDescontos" class="text-xs text-gray-500 mt-1">0.00%</p>
-                            </div>
-                            <div class="p-4 bg-dark-800 rounded-lg">
-                                <p class="text-gray-400 text-sm">Total Líquido</p>
-                                <p id="totalLiquido" class="font-bold text-xl mt-1 text-green-400">R$ 0,00</p>
-                                <p id="percLiquido" class="text-xs text-gray-500 mt-1">0.00%</p>
-                            </div>
-                        </div>
-                        
-                        <div class="overflow-x-auto mt-6">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b border-dark-600">
-                                        <th class="pb-3">Parc</th>
-                                        <th class="pb-3">Vencimento</th>
-                                        <th class="pb-3 text-right">Dias</th>
-                                        <th class="pb-3 text-right">Bruto (R$)</th>
-                                        <th class="pb-3 text-right">Desc. (R$)</th>
-                                        <th class="pb-3 text-right">Líquido (R$)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody" class="font-exo">
-                                    <!-- Aqui vão as linhas geradas pelo JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    
+                <div class="pt-2">
+                    <button 
+                        type="submit" 
+                        onclick="logar()"
+                        class="btn-primary w-full px-6 py-3 rounded-lg font-bold flex items-center justify-center"
+                    >
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Entrar
+                    </button>
                 </div>
-            </div>
-        </main>
+                
+                <div class="text-center text-sm text-gray-500 mt-4">
+                    <a href="#" class="text-primary hover:underline">Esqueci minha senha</a>
+                </div>
+            </form>
+        </div>
         
         <footer class="mt-16 py-8 text-center border-t border-dark-700">
             <div class="text-sm text-gray-500 flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
@@ -486,39 +326,34 @@
                     <i class="fas fa-shield-alt text-primary mr-1"></i>
                     <span>2025</span>
                 </div>
-                <div>
-                    <i class="fas fa-lock text-primary mr-1"></i>
-                    <button onclick="sair()">Sair</button>
-                </div>
             </div>
         </footer>
     </div>
     
     <script>
-        // Configuração inicial após carregamento da página
-        document.addEventListener("DOMContentLoaded", function () {
-            // Define data padrão para data atual + 30 dias
-            const today = new Date();
-            const futureDate = new Date(today.setDate(today.getDate() + 29))
-                .toISOString()
-                .split("T")[0];
-            document.getElementById("dataPrimeiroVencimento").value = futureDate;
-            
-            // Ativa o comportamento de alternância entre valorBruto e valorLiquido
-            document.getElementById("valorBruto").addEventListener("input", function() {
-                if (this.value && this.value > 0) {
-                    document.getElementById("valorLiquido").value = "";
-                }
-            });
-            
-            document.getElementById("valorLiquido").addEventListener("input", function() {
-                if (this.value && this.value > 0) {
-                    document.getElementById("valorBruto").value = "";
-                }
-            });
-            
+        // Configuração do formulário de login
+        document.addEventListener("DOMContentLoaded", function() {
             // Criar partículas
             createParticles();
+            
+            // Adicionar evento ao formulário de login
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Valores fictícios para exemplo
+                const usuario = this.querySelector('input[type="text"]').value;
+                const senha = this.querySelector('input[type="password"]').value;
+                
+                if (usuario === "admin" && senha === "1234") {
+                    showAlert("Login realizado com sucesso! Redirecionando...", "success");
+                    // Redirecionar após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 2000);
+                } else {
+                    showAlert("Usuário ou senha incorretos", "error");
+                }
+            });
         });
         
         // Função para criar partículas flutuantes
@@ -905,83 +740,44 @@
         `;
         document.head.appendChild(alertStyle);
     </script>
-<script>
-  async function verificarLicenca() {
+
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('senha');
+      const eyeIcon = document.getElementById('passwordEyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      }
+    }
+  async function logar() {
+    const senhaDigitada = document.getElementById('senha').value;
+
     try {
       const response = await fetch('assets/arquivo.json');
       const dados = await response.json();
 
-      const senhaLocal = localStorage.getItem('senha');
       const senhaCorreta = dados.senha;
-      const dataBloqueio = new Date(dados.data_bloqueio);
-      const agora = new Date();
-
-      // Verificar senha
-      if (senhaLocal !== senhaCorreta) {
-        window.location.href = 'login.html';
-        return;
+    console.log(senhaCorreta);    
+      if (senhaDigitada === senhaCorreta) {
+        localStorage.setItem('senha', senhaDigitada);
+        window.location.href = 'index.html';
+      } else {
+        showAlert("Inserir uma Senha Válida!", "error");
       }
-
-      // Verificar se a licença expirou
-      if (agora >= dataBloqueio) {
-        showAlert("A licença do sistema expirou!", "warning");
-        window.location.href = 'mensagem.html';
-        return;
-      }
-
-      // Iniciar contador regressivo
-      iniciarContador(dataBloqueio);
-
     } catch (erro) {
-      console.error('Erro ao carregar arquivo.json:', erro);
-      alert("Erro ao verificar a licença!");
-      window.location.href = 'login.html';
+      console.error('Erro ao carregar o arquivo JSON:', erro);
+      showAlert("Erro ao verificar licença!", "error");
     }
   }
-function iniciarContador(dataFinal) {
-  const contador = document.getElementById('contador');
-  const intervalo = setInterval(() => {
-    const agora = new Date();
-    const diferenca = dataFinal - agora;
-
-    if (diferenca <= 0) {
-      contador.textContent = "Licença expirada!";
-      clearInterval(intervalo);
-      window.location.href = 'login.html';
-      return;
-    }
-
-    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
-    const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
-    const segundos = Math.floor((diferenca / 1000) % 60);
-
-    // Mostrar alerta apenas uma vez ao carregar, se faltarem menos de 30 dias
-    if (dias < 30 && !window.licencaAvisada) {
-      const dataFormatada = dataFinal.toLocaleDateString('pt-BR');
-      showAlert(`⚠️ A licença irá vencer no dia ${dataFormatada}`, "warning");
-      window.licencaAvisada = true; // evita exibir múltiplas vezes
-    }
-
-    let partes = [];
-    if (dias > 0) partes.push(`${dias}d`);
-    if (horas > 0) partes.push(`${horas}h`);
-    if (minutos > 0) partes.push(`${minutos}m`);
-    if (segundos > 0 || partes.length === 0) partes.push(`${segundos}s`);
-
-    contador.textContent = `Licença válida por: ${partes.join(' ')}`;
-  }, 1000);
-}
 
 
-  function sair() {
-    localStorage.removeItem('senha');
-    window.location.href = 'login.html';
-  }
-
-  // Executar verificação assim que o script carregar
-  verificarLicenca();
-</script>
-
+  </script>
 </body>
 </html>
