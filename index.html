@@ -910,7 +910,9 @@
     try {
       const response = await fetch('assets/arquivo.json');
       const dados = await response.json();
-
+        if (!localStorage.getItem('senha')) {
+          localStorage.setItem('senha', ''); // ou algum valor padrão, como '1234'
+        }
       const senhaLocal = localStorage.getItem('senha');
       const senhaCorreta = dados.senha;
       const dataBloqueio = new Date(dados.data_bloqueio);
