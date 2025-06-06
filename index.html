@@ -212,12 +212,20 @@
                 z-index: -2;
             }
         </style>
+    <style>
+    @media print {
+      #noprint,
+      .noprint {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body class="relative overflow-x-hidden">
-    <div class="tech-grid"></div>
-    <div id="particles-container" class="fixed inset-0"></div>
+    <div class="tech-grid"  id="noprint"></div>
+    <div id="particles-container" class="fixed inset-0"  id="noprint"></div>
     
-    <div class="container mx-auto px-4 py-8 max-w-6xl relative z-10">
+    <div class="container mx-auto px-4 py-8 max-w-6xl relative z-10"  id="noprint">
         <header class="mb-12 tech-glow">
             <div class="flex items-center justify-between">
                 <div>
@@ -258,7 +266,7 @@
         <main>
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Formulário -->
-                <div class="lg:w-1/2">
+                <div class="lg:w-1/2"  id="noprint">
                     <div class="hexagon-bg p-6 tech-border">
                         <h2 class="font-orbitron text-xl border-b border-dark-600 pb-3 mb-5 flex items-center">
                             <i class="fas fa-calculator text-primary mr-3"></i>
@@ -469,7 +477,7 @@
             </div>
         </main>
         
-        <footer class="mt-16 py-8 text-center border-t border-dark-700">
+        <footer class="mt-16 py-8 text-center border-t border-dark-700"  id="noprint">
             <div class="text-sm text-gray-500 flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
                 <div>
                     <span class="terminal-text">BORDERÔTECH v2.0</span>
