@@ -905,7 +905,7 @@
         `;
         document.head.appendChild(alertStyle);
     </script>
-<script>
+    <script>
   async function verificarLicenca() {
     try {
       const response = await fetch('assets/arquivo.json');
@@ -918,6 +918,7 @@
 
       // Verificar senha
       if (senhaLocal !== senhaCorreta) {
+        localStorage.removeItem('senha'); // limpa a senha inválida para evitar loop
         window.location.href = 'login.html';
         return;
       }
@@ -938,50 +939,54 @@
       window.location.href = 'login.html';
     }
   }
-function iniciarContador(dataFinal) {
-  const contador = document.getElementById('contador');
-  const intervalo = setInterval(() => {
-    const agora = new Date();
-    const diferenca = dataFinal - agora;
 
-    if (diferenca <= 0) {
-      contador.textContent = "Licença expirada!";
-      clearInterval(intervalo);
-      window.location.href = 'login.html';
-      return;
-    }
+  function iniciarContador(dataFinal) {
+    const contador = document.getElementById('contador');
+    const intervalo = setInterval(() => {
+      const agora = new Date();
+      const diferenca = dataFinal - agora;
 
-    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
-    const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
-    const segundos = Math.floor((diferenca / 1000) % 60);
+      if (diferenca <= 0) {
+        contador.textContent = "Licença expirada!";
+        clearInterval(intervalo);
+        window.location.href = 'login.html';
+        return;
+      }
 
-    // Mostrar alerta apenas uma vez ao carregar, se faltarem menos de 30 dias
-    if (dias < 30 && !window.licencaAvisada) {
-      const dataFormatada = dataFinal.toLocaleDateString('pt-BR');
-      showAlert(`⚠️ A licença irá vencer no dia ${dataFormatada}`, "warning");
-      window.licencaAvisada = true; // evita exibir múltiplas vezes
-    }
+      const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+      const segundos = Math.floor((diferenca / 1000) % 60);
 
-    let partes = [];
-    if (dias > 0) partes.push(`${dias}d`);
-    if (horas > 0) partes.push(`${horas}h`);
-    if (minutos > 0) partes.push(`${minutos}m`);
-    if (segundos > 0 || partes.length === 0) partes.push(`${segundos}s`);
+      // Mostrar alerta apenas uma vez se faltar menos de 30 dias
+      if (dias < 30 && !window.licencaAvisada) {
+        const dataFormatada = dataFinal.toLocaleDateString('pt-BR');
+        showAlert(`⚠️ A licença irá vencer no dia ${dataFormatada}`, "warning");
+        window.licencaAvisada = true; // evita mostrar mais de uma vez
+      }
 
-    contador.textContent = `Licença válida por: ${partes.join(' ')}`;
-  }, 1000);
-}
+      let partes = [];
+      if (dias > 0) partes.push(`${dias}d`);
+      if (horas > 0) partes.push(`${horas}h`);
+      if (minutos > 0) partes.push(`${minutos}m`);
+      if (segundos > 0 || partes.length === 0) partes.push(`${segundos}s`);
 
+      contador.textContent = `Licença válida por: ${partes.join(' ')}`;
+    }, 1000);
+  }
 
   function sair() {
     localStorage.removeItem('senha');
     window.location.href = 'login.html';
   }
 
-  // Executar verificação assim que o script carregar
-  verificarLicenca();
+  // Executar verificação apenas se não estiver na página de login
+  const paginaAtual = window.location.pathname;
+  if (!paginaAtual.endsWith("login.html")) {
+    verificarLicenca();
+  }
 </script>
+
 
 </body>
 </html>
