@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Desconto de Títulos - Borderô Bancário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#64748b',
+                        success: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hover-scale:hover {
+            transform: scale(1.02);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        @media print {
+            @page {
+                size: landscape;
+                margin: 0.5cm;
+            }
+            body * {
+                visibility: hidden;
+            }
+            #resultsSection, #resultsSection * {
+                visibility: visible;
+            }
+            #resultsSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .print\\:hidden {
+                display: none !important;
+            }
+            table {
+                font-size: 0.75rem;
+                width: 100%;
+            }
+            th, td {
+                padding: 0.25rem 0.5rem;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                <i class="fas fa-calculator text-primary mr-2"></i>
+                Simulador de Desconto de Títulos
+            </h1>
+            <p class="text-secondary text-lg">Calcule o valor bruto de seus títulos para alcançar o valor líquido desejado</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 hover-scale">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-clipboard-list text-primary mr-2"></i>
+                Dados para Cálculo
+            </h2>
+            <form id="calculationForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="baseDate" class="block text-sm font-medium text-gray-700 mb-1">
+                            <i class="far fa-calendar-alt mr-1"></i>
+                            Data Base
+                        </label>
+                        <input type="date" id="baseDate" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="interestRate" class="block text-sm font-medium text-gray-700 mb-1">
+                            <i class="fas fa-percentage mr-1"></i>
+                            Taxa de Juros ao Mês (%)
+                        </label>
+                        <input type="number" id="interestRate" step="0.01" placeholder="5.00" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="dueDates" class="block text-sm font-medium text-gray-700 mb-1">
+                        <i class="far fa-calendar-check mr-1"></i>
+                        Datas de Vencimento (uma por linha)
+                    </label>
+                    <textarea id="dueDates" rows="4" placeholder="15/12/2024,30/12/2024,10/01/2025" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
+                
+                <div>
+                    <label for="desiredNetValue" class="block text-sm font-medium text-gray-700 mb-1">
+                        <i class="fas fa-dollar-sign mr-1"></i>
+                        Valor Líquido Desejado (R$)
+                    </label>
+                    <input type="number" id="desiredNetValue" step="0.01" placeholder="125000.00" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <button type="submit" id="calculateBtn" class="w-full bg-primary text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-calculator mr-2"></i>
+                    Calcular Borderô
+                </button>
+            </form>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsSection" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                    <i class="fas fa-table text-primary mr-2"></i>
+                    Borderô de Desconto
+                </h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold">Data Base</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold">Data Vencimento</th>
+                                <th class="border border-gray-300 px-4 py-2 text-right text-sm font-semibold">Dias Corridos</th>
+                                <th class="border border-gray-300 px-4 py-2 text-right text-sm font-semibold">Valor Bruto (R$)</th>
+                                <th class="border border-gray-300 px-4 py-2 text-right text-sm font-semibold">Taxa (% a.m.)</th>
+                                <th class="border border-gray-300 px-4 py-2 text-right text-sm font-semibold">Juros (R$)</th>
+                                <th class="border border-gray-300 px-4 py-2 text-right text-sm font-semibold">Valor Líquido (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-100 font-bold">
+                                <td colspan="3" class="border border-gray-300 px-4 py-2 text-right">TOTAIS</td>
+                                <td id="totalGross" class="border border-gray-300 px-4 py-2 text-right text-green-600"></td>
+                                <td class="border border-gray-300 px-4 py-2"></td>
+                                <td id="totalInterest" class="border border-gray-300 px-4 py-2 text-right text-red-600"></td>
+                                <td id="totalNet" class="border border-gray-300 px-4 py-2 text-right text-blue-600"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 print:hidden">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="text-sm font-semibold text-green-800 mb-1">Taxa Efetiva de Desconto</h3>
+                        <p id="effectiveRate" class="text-2xl font-bold text-green-600"></p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="text-sm font-semibold text-blue-800 mb-1">Valor Líquido Final</h3>
+                        <p id="finalNetValue" class="text-2xl font-bold text-blue-600"></p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-sm font-semibold text-gray-800 mb-1">Número de Títulos</h3>
+                        <p id="numberOfTitles" class="text-2xl font-bold text-gray-600"></p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-center print:hidden">
+                    <button onclick="window.print()" class="bg-primary text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-print mr-2"></i>
+                        Imprimir Borderô
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateBordero();
+        });
+
+        // Set default date to today
+        document.getElementById('baseDate').valueAsDate = new Date();
+
+        function calculateBordero() {
+            const baseDate = new Date(document.getElementById('baseDate').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+            const desiredNetValue = parseFloat(document.getElementById('desiredNetValue').value);
+            const dueDatesText = document.getElementById('dueDates').value;
+            
+            // Parse dates
+            const dueDates = dueDatesText.split(/[,;\n]/)
+                .map(d => d.trim())
+                .filter(d => d)
+                .map(d => {
+                    const [day, month, year] = d.split('/');
+                    return new Date(year, month - 1, day);
+                });
+            
+            // Calculate days and total factor
+            let totalFactor = 0;
+            const calculations = dueDates.map(date => {
+                const days = Math.round((date - baseDate) / (1000 * 60 * 60 * 24));
+                const factor = days / 30 * interestRate;
+                totalFactor += factor;
+                return { date, days, factor };
+            });
+            
+            // Calculate gross value per title
+            const grossPerTitle = desiredNetValue / (dueDates.length - totalFactor);
+            
+            // Build results
+            let totalGross = 0;
+            let totalInterest = 0;
+            let totalNet = 0;
+            
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = '';
+            
+            calculations.forEach(({ date, days, factor }) => {
+                const gross = grossPerTitle;
+                const interest = gross * factor;
+                const net = gross - interest;
+                
+                totalGross += gross;
+                totalInterest += interest;
+                totalNet += net;
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td class="border border-gray-300 px-4 py-2 text-sm">${baseDate.toLocaleDateString('pt-BR')}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-sm">${date.toLocaleDateString('pt-BR')}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right text-sm">${days}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right text-sm">${gross.toFixed(2)}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right text-sm">${(interestRate * 100).toFixed(2)}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right text-sm">${interest.toFixed(2)}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right text-sm">${net.toFixed(2)}</td>
+                `;
+            });
+            
+            // Update totals
+            document.getElementById('totalGross').textContent = totalGross.toFixed(2);
+            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2);
+            document.getElementById('totalNet').textContent = totalNet.toFixed(2);
+            
+            // Update summary
+            document.getElementById('effectiveRate').textContent = 
+                ((totalInterest / totalGross) * 100).toFixed(2) + '%';
+            document.getElementById('finalNetValue').textContent = 
+                'R$ ' + totalNet.toFixed(2);
+            document.getElementById('numberOfTitles').textContent = dueDates.length;
+            
+            // Show results
+            document.getElementById('resultsSection').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
